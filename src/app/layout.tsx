@@ -18,8 +18,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={vazirmatn.className}>{children}</body>
+    <html lang="fa">
+      <body className={`${vazirmatn.className} bg-[#1e1e200d]`}>
+        {children}
+      </body>
     </html>
   );
 }
