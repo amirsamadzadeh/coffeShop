@@ -11,7 +11,6 @@ const schema = new mongoose.Schema({
   },
   caffein: {
     type: String,
-    required: true,
   },
   weight: {
     type: Number,
@@ -19,6 +18,7 @@ const schema = new mongoose.Schema({
   },
   score: {
     type: Number,
+    default: 5,
     required: true,
   },
   pakaging: {
