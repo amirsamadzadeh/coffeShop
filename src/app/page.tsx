@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Navbar } from "@/components/modules/Navbar";
 import ProductCard from "@/components/modules/ProductCard";
 import Categories from "@/components/templates/index/Categories";
+import Footer from "@/components/modules/Footer";
 export default function Home() {
   return (
     <div className="">
@@ -11,7 +12,8 @@ export default function Home() {
         <ProductCard />
       </div> */}
 
-      <Categories />
+      {/* <Categories /> */}
+      {/* <Footer /> */}
     </div>
   );
 }
