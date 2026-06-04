@@ -16,14 +16,14 @@ export const Navbar = () => {
         <div className="flex flex-row-reverse items-center justify-center gap-4">
           <Link href="/">
             <img
-              src="images/logo1.svg"
+              src="/images/logo1.svg"
               alt="Logo"
               className="w-12 h-auto sm:w-18 lg:w-20 cursor-pointer"
             />
           </Link>
           <Link href="/">
             <img
-              src="images/logo2.svg"
+              src="/images/logo2.svg"
               alt="Logo"
               className="h-auto w-24 cursor-pointer hidden xl:flex"
             />
