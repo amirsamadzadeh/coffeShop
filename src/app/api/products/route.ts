@@ -38,3 +38,15 @@ export async function POST(req: Request) {
     }
   }
 }
+
+export async function GET(req: Request) {
+  try {
+    await connectDB();
+    let products = await model.find({});
+    return Response.json(products, { status: 200 });
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      return Response.json({ err: err.message }, { status: 500 });
+    }
+  }
+}
