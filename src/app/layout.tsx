@@ -23,7 +23,6 @@ export default function RootLayout({
       <body className={`${vazirmatn.className} bg-[#1e1e200d]`}>
         <Navbar />
         {children}
-        {/* <Footer /> */}
       </body>
     </html>
   );

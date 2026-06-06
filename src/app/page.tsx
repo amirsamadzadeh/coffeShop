@@ -3,6 +3,7 @@ import ProductCard from "@/components/modules/ProductCard";
 import Categories from "@/components/templates/index/Categories";
 import connectDB from "@/configs/db";
 import { model } from "@/models/Products";
+import Footer from "@/components/modules/Footer";
 export default async function Home() {
   await connectDB();
   const products = await model.find(
@@ -22,6 +23,7 @@ export default async function Home() {
       </div>
 
       {/* <Categories /> */}
+      <Footer />
     </div>
   );
 }
