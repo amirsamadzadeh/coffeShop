@@ -28,7 +28,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
       {/* captions */}
       <div className="text-right leading-1 mb-4">
-        <h4 className="text-xs pr-0.5">{product.name}</h4>
+        <h4 className="text-xs pr-0.5 text-wrap h-12">{product.name}</h4>
       </div>
 
       {/* price */}

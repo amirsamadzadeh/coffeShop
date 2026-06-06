@@ -12,7 +12,7 @@ export default async function Home() {
 
   return (
     <div className="">
-      <div className="grid grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12  gap-2 w-[90%] mx-auto">
+      <div className="grid grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 md:px-3 lg:px-5 xl:px-7 2xl:px-12 gap-2 mx-auto">
         {products.map((product) => (
           <ProductCard
             product={JSON.parse(JSON.stringify(product))}

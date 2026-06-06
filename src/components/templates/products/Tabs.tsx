@@ -4,11 +4,12 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { HiBars3BottomRight } from "react-icons/hi2";
 import { BiComment } from "react-icons/bi";
 import { IoIosArrowBack } from "react-icons/io";
+import { useState } from "react";
 
 type productDataTypes = {
   _id: string;
   name: string;
-  price: string;
+  price: Number;
   image: string;
   caffein: string;
   weight: number;
@@ -21,7 +22,6 @@ type ProductTypes = {
   product: productDataTypes;
 };
 
-import { useState } from "react";
 const Tabs = ({ product }: ProductTypes) => {
   const [tabDescription, setTabDescription] = useState(true);
   const [tabAttribute, setTabAttribute] = useState(false);

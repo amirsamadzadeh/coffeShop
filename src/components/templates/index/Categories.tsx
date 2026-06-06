@@ -29,7 +29,7 @@ export default function Categories() {
         },
       }}
       spaceBetween={12}
-      className="w-[90%] mt-5"
+      className="md:px-3 lg:px-5 xl:px-7 2xl:px-12 mt-5"
     >
       <SwiperSlide>
         <CategoryCard />
