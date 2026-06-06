@@ -16,7 +16,7 @@ type ProductsPropTypes = {
 
 const RelatedProducts = ({ products }: ProductsPropTypes) => {
   return (
-    <div className="text-right h-full md:px-3 lg:px-5 xl:px-7 2xl:px-12 mb-4">
+    <div className="text-right h-full md:px-3 lg:px-5 xl:px-7 2xl:px-12 mb-25 lg:mb-6">
       <h3 className="text-lg md:text-xl font-bold mb-2 pr-2">محصولات مرتبط</h3>
       {/* slides */}
       <div dir="rtl" className="h-full">
