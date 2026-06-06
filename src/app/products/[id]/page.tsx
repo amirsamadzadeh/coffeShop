@@ -35,7 +35,7 @@ export default async function ProductPage({ params }: Props) {
       <Tabs product={JSON.parse(JSON.stringify(product))} />
       <RelatedProducts products={JSON.parse(JSON.stringify(products))} />
       <AddToCart price={product.price} />
-      <div className="hidden lg:visible">
+      <div className="hidden lg:block">
         <Footer />
       </div>
     </>
