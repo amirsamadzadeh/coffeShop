@@ -23,9 +23,9 @@ type ProductTypes = {
 };
 function ProductDetail({ product }: ProductTypes) {
   return (
-    <div className="px-3">
+    <div className="md:px-3 lg:px-5 xl:px-7 2xl:px-12">
       <div
-        className="lg:flex border border-gray-100 rounded-tr-lg rounded-tl-lg lg:rounded-xl w-full lg:w-[96%] md:px-3 lg:px-0  md:mx-auto bg-white lg:border-b lg:border-b-[#E2E8F0] lg:mb-4 lg:pb-10 lg:mt-8"
+        className="lg:flex border border-gray-100 rounded-tr-lg rounded-tl-lg lg:rounded-xl w-full  md:px-3 lg:px-0  md:mx-auto bg-white lg:border-b lg:border-b-[#E2E8F0] lg:mb-4 lg:pb-10 lg:mt-8"
         dir="rtl"
       >
         {/* product Image */}
