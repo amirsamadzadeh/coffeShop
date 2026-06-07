@@ -23,7 +23,7 @@ export default async function Home() {
         ))}
       </div> */}
       <HeroSection />
-      {/* <Categories /> */}
+      <Categories />
       <Footer />
     </div>
   );
