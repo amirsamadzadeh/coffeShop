@@ -13,7 +13,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  caffein: {
+  caffeine: {
     type: String,
   },
   weight: {
@@ -25,7 +25,7 @@ const schema = new mongoose.Schema({
     default: 5,
     required: true,
   },
-  pakaging: {
+  packaging: {
     type: String,
     required: true,
   },
@@ -34,6 +34,10 @@ const schema = new mongoose.Schema({
     required: true,
   },
   roast: {
+    type: String,
+    required: true,
+  },
+  category: {
     type: String,
     required: true,
   },
