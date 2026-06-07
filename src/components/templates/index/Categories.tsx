@@ -83,9 +83,11 @@ export default function Categories() {
         dir="rtl"
       >
         {categorieDatas?.map((data, index) => (
-          <Link href={`/categories/${data.slug}`} key={index}>
-            <CategoryCard {...data} />
-          </Link>
+          <SwiperSlide key={index}>
+            <Link href={`/categories/${data.slug}`}>
+              <CategoryCard {...data} />
+            </Link>
+          </SwiperSlide>
         ))}
       </Swiper>
     </div>
