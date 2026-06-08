@@ -1,10 +1,10 @@
-import Image from "next/image";
-import ProductCard from "@/components/modules/ProductCard";
+import { HeroSection } from "@/components/templates/index/HeroSection";
 import Categories from "@/components/templates/index/Categories";
+import { MostSales } from "@/components/templates/index/MostSales";
+import ProductCard from "@/components/modules/ProductCard";
 import connectDB from "@/configs/db";
 import { model } from "@/models/Products";
 import Footer from "@/components/modules/Footer";
-import { HeroSection } from "@/components/templates/index/HeroSection";
 export default async function Home() {
   await connectDB();
   const products = await model.find(
@@ -24,6 +24,7 @@ export default async function Home() {
       </div> */}
       <HeroSection />
       <Categories />
+      <MostSales />
       <Footer />
     </div>
   );
