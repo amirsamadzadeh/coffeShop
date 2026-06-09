@@ -1,10 +1,12 @@
 import { HeroSection } from "@/components/templates/index/HeroSection";
 import Categories from "@/components/templates/index/Categories";
 import { MostSales } from "@/components/templates/index/MostSales";
+import TasteFinder from "@/components/templates/index/TasteFinder";
 import ProductCard from "@/components/modules/ProductCard";
 import connectDB from "@/configs/db";
 import { model } from "@/models/Products";
 import Footer from "@/components/modules/Footer";
+
 export default async function Home() {
   await connectDB();
   const products = await model.find(
@@ -25,6 +27,7 @@ export default async function Home() {
       <HeroSection />
       <Categories />
       <MostSales />
+      <TasteFinder />
       <Footer />
     </div>
   );
