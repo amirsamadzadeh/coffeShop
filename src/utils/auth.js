@@ -46,7 +46,7 @@ const getUserFromToken = async () => {
       }
       return user;
     } catch {
-      return user;
+      return null;
     }
   }
 };
