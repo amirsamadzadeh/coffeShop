@@ -39,6 +39,7 @@ const getUserFromToken = async () => {
   let user = null;
   if (token) {
     try {
+      await connectDB();
       const tokenPayload = verifyAccessToken(token);
       if (tokenPayload) {
         user = await UserModel.findOne({ email: tokenPayload.email });
