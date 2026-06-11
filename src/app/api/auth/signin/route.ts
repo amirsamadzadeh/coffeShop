@@ -69,10 +69,5 @@ export async function POST(req: Request) {
       },
       { status: 200 },
     );
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      return Response.json({ message: err.message }, { status: 500 });
-    }
-    return Response.json({ message: err }, { status: 500 });
-  }
+  } git commit -m "feat: implement user login endpoint with JWT authentication"
 }
