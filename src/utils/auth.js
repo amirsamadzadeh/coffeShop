@@ -20,8 +20,8 @@ const generateAccessToken = (data) => {
   return token;
 };
 
-const generateRefreshToken = async (data) => {
-  const refreshToken = sign({ ...data }, verify, {
+const generateRefreshToken = (data) => {
+  const refreshToken = sign({ ...data }, process.env.RefreshTokenSecretKey, {
     expiresIn: "15d",
   });
   return refreshToken;
