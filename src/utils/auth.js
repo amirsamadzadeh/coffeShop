@@ -2,6 +2,7 @@ import { hash, compare } from "bcryptjs";
 import { sign, verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { model as UserModel } from "@/models/Users";
+import connectDB from "@/configs/db";
 
 const hashPassword = async (password) => {
   const hashedPassword = await hash(password, 12);
@@ -29,13 +30,13 @@ const generateRefreshToken = (data) => {
 
 const verifyAccessToken = (token) => {
   const tokenPayload = verify(token, process.env.AccessTokenSecretKey);
+
   return tokenPayload;
 };
 
 const getUserFromToken = async () => {
   const cookiesStore = await cookies();
   const token = cookiesStore.get("token")?.value;
-
   let user = null;
   if (token) {
     try {
@@ -43,9 +44,10 @@ const getUserFromToken = async () => {
       const tokenPayload = verifyAccessToken(token);
       if (tokenPayload) {
         user = await UserModel.findOne({ email: tokenPayload.email });
+        return user;
       }
-      return user;
-    } catch {
+    } catch (err) {
+      console.log("JWT ERROR =>", err);
       return null;
     }
   }
