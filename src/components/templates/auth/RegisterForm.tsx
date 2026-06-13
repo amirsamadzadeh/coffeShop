@@ -1,4 +1,4 @@
-import { MdOutlineMail } from "react-icons/md";
+import { MdOutlineMail, MdOutlinePerson } from "react-icons/md";
 import { LuKeyRound } from "react-icons/lu";
 import { HiMiniDevicePhoneMobile } from "react-icons/hi2";
 import { useActionState } from "react";
@@ -26,6 +26,22 @@ export const RegisterForm = () => {
 
       {/* form get Data */}
       <form className="flex flex-col px-4 gap-2" dir="rtl" action={formAction}>
+        <label
+          htmlFor="reg-email"
+          className="text-sm font-medium text-gray-700"
+        >
+          نام
+        </label>
+        <div className="flex px-3 py-2 items-center justify-between border border-gray-200 rounded-md bg-gray-50 focus-within:border-[#D1B378] transition-colors">
+          <input
+            type="text"
+            name="name"
+            id="reg-name"
+            className="border-none outline-0 w-full bg-transparent text-sm"
+            placeholder="نام خود را وارد کنید"
+          />
+          <MdOutlinePerson className="text-gray-400" size={20} />
+        </div>
         <label
           htmlFor="reg-email"
           className="text-sm font-medium text-gray-700"
