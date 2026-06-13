@@ -183,10 +183,35 @@ export async function otpLoginAction(
   prevState: AuthState,
   formData: FormData,
 ): Promise<AuthState> {
-  return {
-    success: false,
-    message: "not implemented yet",
-  };
+  try {
+    const response = await fetch(
+      "https://api.iranpayamak.com/ws/v1/sms/pattern",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Api-Key": process.env.IRANPAYAMAK_API_KEY!,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          code: process.env.IRANPAYAMAK_PATTERN_CODE,
+          attributes: {
+            code: "12556",
+          },
+          recipient: "09104761076",
+          line_number: "90008361",
+          number_format: "english",
+        }),
+      },
+    );
+
+    return {
+      success: true,
+      message: "OTP sent successfully",
+    };
+  } catch (err) {
+    return { success: false, message: "sms failed" }
+  }
 }
 
 /* TODO */
