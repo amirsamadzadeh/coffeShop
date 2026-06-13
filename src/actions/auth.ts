@@ -20,66 +20,73 @@ export async function loginAction(
   prevState: AuthState,
   formData: FormData,
 ): Promise<AuthState> {
-  await connectDB();
+  try {
+    await connectDB();
 
-  const email = formData.get("email")?.toString() || "";
-  const password = formData.get("password")?.toString() || "";
+    const email = formData.get("email")?.toString() || "";
+    const password = formData.get("password")?.toString() || "";
 
-  if (!email.trim() || !password.trim()) {
+    if (!email.trim() || !password.trim()) {
+      return {
+        success: false,
+        message: "email or password is empty",
+      };
+    }
+
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      return {
+        success: false,
+        message: "invalid email or password",
+      };
+    }
+
+    const isValidPassword = await verifyPassword(password, user.password);
+
+    if (!isValidPassword) {
+      return {
+        success: false,
+        message: "invalid email or password",
+      };
+    }
+
+    const token = generateAccessToken({
+      id: user._id,
+      email: user.email,
+      role: user.role,
+    });
+
+    const refreshToken = generateRefreshToken({
+      id: user._id,
+      email: user.email,
+      role: user.role,
+    });
+
+    const cookieStore = await cookies();
+
+    cookieStore.set("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 7,
+      path: "/",
+    });
+
+    cookieStore.set("refresh", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 15,
+      path: "/",
+    });
+  } catch {
     return {
       success: false,
-      message: "email or password is empty",
+      message: "internal server error",
     };
   }
-
-  const user = await UserModel.findOne({ email });
-
-  if (!user) {
-    return {
-      success: false,
-      message: "invalid email or password",
-    };
-  }
-
-  const isValidPassword = await verifyPassword(password, user.password);
-
-  if (!isValidPassword) {
-    return {
-      success: false,
-      message: "invalid email or password",
-    };
-  }
-
-  const token = generateAccessToken({
-    id: user._id,
-    email: user.email,
-    role: user.role,
-  });
-
-  const refreshToken = generateRefreshToken({
-    id: user._id,
-    email: user.email,
-    role: user.role,
-  });
-
-  const cookieStore = await cookies();
-
-  cookieStore.set("token", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: 60 * 60 * 24 * 7,
-    path: "/",
-  });
-
-  cookieStore.set("refresh", refreshToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: 60 * 60 * 24 * 15,
-    path: "/",
-  });
-  redirect("/dashboard", "push");
+  redirect("/dashboard");
 }
 
 export async function registerAction(
@@ -153,17 +160,13 @@ export async function registerAction(
       maxAge: 60 * 60 * 24 * 15,
       path: "/",
     });
-
-    return {
-      success: true,
-      message: "User created successfully",
-    };
   } catch {
     return {
       success: false,
       message: "internal server error",
     };
   }
+  redirect("/dashboard");
 }
 
 export async function logoutAction() {
