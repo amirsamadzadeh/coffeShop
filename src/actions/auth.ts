@@ -175,23 +175,13 @@ export async function registerAction(
   }
 }
 
-export async function logoutAction(): Promise<AuthState> {
-  try {
-    const cookieStore = await cookies();
+export async function logoutAction() {
+  const cookieStore = await cookies();
 
-    cookieStore.delete("token");
-    cookieStore.delete("refresh");
+  cookieStore.delete("token");
+  cookieStore.delete("refresh");
 
-    return {
-      success: true,
-      message: "User logged out successfully",
-    };
-  } catch {
-    return {
-      success: false,
-      message: "internal server error",
-    };
-  }
+  redirect("/");
 }
 
 /* TODO */
