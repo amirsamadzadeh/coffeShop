@@ -25,7 +25,7 @@ export async function loginAction(
   const email = formData.get("email")?.toString() || "";
   const password = formData.get("password")?.toString() || "";
 
-  if (!email.trim() || !password.trim()) {
+  if (!email.trim() || !password.trim() || !name.trim() {
     return {
       success: false,
       message: "email or password is empty",
@@ -89,14 +89,15 @@ export async function registerAction(
   try {
     await connectDB();
 
+  const name = formData.get("name")?.toString() || "";
     const email = formData.get("email")?.toString() || "";
     const password = formData.get("password")?.toString() || "";
     const phone = formData.get("phone")?.toString() || "";
 
-    if (!email.trim() || !password.trim() || !phone.trim()) {
+    if (!email.trim() || !password.trim() || !phone.trim() || !name.trim()) {
       return {
         success: false,
-        message: "email phone or password is empty",
+        message: "email phone or password or name is empty",
       };
     }
 
@@ -116,6 +117,7 @@ export async function registerAction(
     const usersCount = await UserModel.countDocuments();
 
     const newUser = await UserModel.create({
+      name,
       email,
       password: hashedPassword,
       phone,
