@@ -25,7 +25,7 @@ export async function loginAction(
   const email = formData.get("email")?.toString() || "";
   const password = formData.get("password")?.toString() || "";
 
-  if (!email.trim() || !password.trim() || !name.trim() {
+  if (!email.trim() || !password.trim()) {
     return {
       success: false,
       message: "email or password is empty",
@@ -89,7 +89,7 @@ export async function registerAction(
   try {
     await connectDB();
 
-  const name = formData.get("name")?.toString() || "";
+    const name = formData.get("name")?.toString() || "";
     const email = formData.get("email")?.toString() || "";
     const password = formData.get("password")?.toString() || "";
     const phone = formData.get("phone")?.toString() || "";
