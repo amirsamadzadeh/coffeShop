@@ -7,7 +7,9 @@ import { loginAction } from "@/actions/auth";
 
 type Props = {
   setFormStatus: Dispatch<
-    SetStateAction<"LOGIN" | "LOGIN_NUMBER" | "REGISTER" | "FORGOT-PASSWORD">
+    SetStateAction<
+      "LOGIN" | "LOGIN_NUMBER" | "REGISTER" | "FORGOT-PASSWORD" | "OTP_VERIFY"
+    >
   >;
 };
 

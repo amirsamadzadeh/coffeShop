@@ -178,11 +178,12 @@ export async function logoutAction() {
   redirect("/");
 }
 
-/* TODO */
 export async function otpLoginAction(
   prevState: AuthState,
   formData: FormData,
 ): Promise<AuthState> {
+  const phone = formData.get("phone")?.toString() || "";
+  const cookieStore = await cookies()
   try {
     const response = await fetch(
       "https://api.iranpayamak.com/ws/v1/sms/pattern",
@@ -198,20 +199,30 @@ export async function otpLoginAction(
           attributes: {
             code: "12556",
           },
-          recipient: "09104761076",
+          recipient: phone,
           line_number: "90008361",
           number_format: "english",
         }),
       },
     );
 
+    cookieStore.set("otp-phone", phone, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 2,
+      path: "/",
+    });
+
     return {
       success: true,
       message: "OTP sent successfully",
     };
   } catch (err) {
-    return { success: false, message: "sms failed" }
+    return { success: false, message: "sms failed" };
   }
+
+
 }
 
 /* TODO */

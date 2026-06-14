@@ -6,10 +6,14 @@ import { LoginForm } from "@/components/templates/auth/LoginForm";
 import { RegisterForm } from "@/components/templates/auth/RegisterForm";
 import { OtpLoginForm } from "@/components/templates/auth/OtpLoginForm";
 import { ForgotForm } from "@/components/templates/auth/ForgotForm";
+import { OtpVerify } from "@/components/templates/auth/OtpVerify";
 
-type formStatusType = "LOGIN" | "REGISTER" | "LOGIN_NUMBER" | "FORGOT-PASSWORD";
-
-import Link from "next/link";
+type formStatusType =
+  | "LOGIN"
+  | "REGISTER"
+  | "LOGIN_NUMBER"
+  | "FORGOT-PASSWORD"
+  | "OTP_VERIFY";
 
 const LoginOrRegister = () => {
   const [formStatus, setFormStatus] = useState<formStatusType>("LOGIN");
@@ -19,7 +23,8 @@ const LoginOrRegister = () => {
       {/* wrapper */}
       <div className="w-[90%] md:w-112.5 bg-white rounded-lg shadow-sm border border-gray-100 p-4">
         {/* Tabs => Login / Register */}
-        {formStatus === "FORGOT-PASSWORD" ? null : (
+        {formStatus === "FORGOT-PASSWORD" ||
+        formStatus === "OTP_VERIFY" ? null : (
           <div className="flex w-full opacity-75 mb-10">
             {/* Login Tab*/}
             <div
@@ -92,6 +97,9 @@ const LoginOrRegister = () => {
 
         {formStatus === "LOGIN_NUMBER" && (
           <OtpLoginForm setFormStatus={setFormStatus} />
+        )}
+        {formStatus === "OTP_VERIFY" && (
+          <OtpVerify setFormStatus={setFormStatus} />
         )}
       </div>
     </div>
