@@ -3,6 +3,7 @@
 import connectDB from "@/configs/db";
 import { cookies } from "next/headers";
 import { model as UserModel } from "@/models/Users";
+import { model as OtpModel } from "@/models/Otp";
 import {
   hashPassword,
   verifyPassword,
@@ -183,8 +184,12 @@ export async function otpLoginAction(
   formData: FormData,
 ): Promise<AuthState> {
   const phone = formData.get("phone")?.toString() || "";
-  const cookieStore = await cookies()
+  const cookieStore = await cookies();
   try {
+    await connectDB();
+    const code = Math.floor(100000 + Math.random() * 900000);
+    const now = Date.now();
+    const expireAt = now + 2 * 60 * 1000;
     const response = await fetch(
       "https://api.iranpayamak.com/ws/v1/sms/pattern",
       {
@@ -197,7 +202,7 @@ export async function otpLoginAction(
         body: JSON.stringify({
           code: process.env.IRANPAYAMAK_PATTERN_CODE,
           attributes: {
-            code: "12556",
+            code,
           },
           recipient: phone,
           line_number: "90008361",
@@ -210,8 +215,14 @@ export async function otpLoginAction(
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 60 * 2,
+      maxAge: 2 * 60,
       path: "/",
+    });
+
+    await OtpModel.create({
+      phone: phone,
+      code: code,
+      expireAt,
     });
 
     return {
@@ -221,8 +232,81 @@ export async function otpLoginAction(
   } catch (err) {
     return { success: false, message: "sms failed" };
   }
+}
 
+export async function verifyOtpAction(
+  prevState: AuthState,
+  formData: FormData,
+) {
+  try {
+    await connectDB();
 
+    const cookieStore = await cookies();
+
+    const phone = cookieStore.get("otp-phone")?.value;
+    const code = formData.get("otp")?.toString() || "";
+
+    if (!phone) {
+      await OtpModel.deleteMany({ phone });
+      return { success: false, message: "phone not found" };
+    }
+
+    const otpRecord = await OtpModel.findOne({ phone });
+
+    if (!otpRecord) {
+      return { success: false, message: "otp not found" };
+    }
+
+    if (Date.now() > otpRecord.expireAt) {
+      await OtpModel.deleteMany({ phone });
+      return { success: false, message: "otp expired" };
+    }
+
+    if (otpRecord.code !== code) {
+      return { success: false, message: "invalid otp" };
+    }
+
+    const user = await UserModel.findOne({ phone });
+
+    if (!user) {
+      await OtpModel.deleteMany({ phone });
+      return { success: false, message: "user not found" };
+    }
+
+    const token = generateAccessToken({
+      id: user._id,
+      email: user.email,
+      role: user.role,
+    });
+
+    const refreshToken = generateRefreshToken({
+      id: user._id,
+      email: user.email,
+      role: user.role,
+    });
+
+    cookieStore.set("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 7,
+      path: "/",
+    });
+
+    cookieStore.set("refresh", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 15,
+      path: "/",
+    });
+    await OtpModel.deleteMany({ phone });
+    cookieStore.delete("otp-phone");
+
+    redirect("/dashboard");
+  } catch (err) {
+    return { success: false, message: "verify failed" };
+  }
 }
 
 /* TODO */

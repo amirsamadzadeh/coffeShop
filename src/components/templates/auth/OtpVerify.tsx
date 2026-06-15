@@ -1,6 +1,7 @@
 import { HiMiniDevicePhoneMobile } from "react-icons/hi2";
 import { Dispatch, SetStateAction } from "react";
-
+import { verifyOtpAction } from "@/actions/auth";
+import { useActionState } from "react";
 type Props = {
   setFormStatus: Dispatch<
     SetStateAction<
@@ -10,10 +11,14 @@ type Props = {
 };
 
 export const OtpVerify = ({ setFormStatus }: Props) => {
+  const [state, formAction, isPending] = useActionState(verifyOtpAction, {
+    success: false,
+    message: "",
+  });
   return (
     <div className="flex flex-col mb-6 animate-fadeIn">
       {/* form get Data */}
-      <form className="flex flex-col px-4 gap-2" dir="rtl">
+      <form className="flex flex-col px-4 gap-2" dir="rtl" action={formAction}>
         <label htmlFor="phone" className="text-sm font-medium text-gray-700">
           کد یکبار مصرف ارسال شده را وارد کنید
         </label>
@@ -21,7 +26,7 @@ export const OtpVerify = ({ setFormStatus }: Props) => {
           <input
             type="text"
             id="otp"
-            name="ot"
+            name="otp"
             className="border-none outline-0 w-full bg-transparent text-sm"
             placeholder="09"
           />
