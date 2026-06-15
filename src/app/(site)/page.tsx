@@ -30,7 +30,6 @@ export default async function Home() {
       <MostSales />
       <TasteFinder />
       <PremiumBundles />
-      <Footer />
     </div>
   );
 }
