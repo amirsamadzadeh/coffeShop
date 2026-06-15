@@ -4,7 +4,6 @@ import ProductDetail from "@/components/modules/products/ProductDetail";
 import Tabs from "@/components/templates/products/Tabs";
 import RelatedProducts from "@/components/templates/products/RelatedProducts";
 import AddToCart from "@/components/templates/products/AddToCart";
-import Footer from "@/components/modules/Footer";
 
 type Props = {
   params: {
@@ -36,7 +35,7 @@ export default async function ProductPage({ params }: Props) {
       <RelatedProducts products={JSON.parse(JSON.stringify(products))} />
       <AddToCart price={product.price} />
       <div className="hidden lg:block">
-        <Footer />
+        
       </div>
     </>
   );
