@@ -4,7 +4,17 @@ export async function POST(req: Request) {
   try {
     await connectDB();
     const body = await req.json();
-    const { name, image, caffein, weight, pakaging, aroma, roast } = body;
+    const {
+      name,
+      image,
+      caffein,
+      weight,
+      packaging,
+      aroma,
+      roast,
+      category,
+      price,
+    } = body;
 
     // Validation  (for now its a basic Validation)
 
@@ -13,9 +23,11 @@ export async function POST(req: Request) {
       !image ||
       !caffein ||
       !weight ||
-      !pakaging ||
+      !packaging ||
       !aroma ||
-      !roast
+      !roast ||
+      !category ||
+      !price
     ) {
       return Response.json(
         { message: "not valid data for product" },
@@ -23,7 +35,18 @@ export async function POST(req: Request) {
       );
     }
 
-    const newProduct = { name, image, caffein, weight, pakaging, aroma, roast };
+    const newProduct = {
+      name,
+      image,
+      caffein,
+      weight,
+      packaging,
+      aroma,
+      roast,
+      category,
+      price,
+    };
+
     await model.create(newProduct);
     return Response.json(
       { message: "product added successfully" },

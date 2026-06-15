@@ -6,6 +6,7 @@ import ProductCard from "@/components/modules/ProductCard";
 import connectDB from "@/configs/db";
 import { model } from "@/models/Products";
 import Footer from "@/components/modules/Footer";
+import { PremiumBundles } from "@/components/templates/index/PremiumBundles";
 
 export default async function Home() {
   await connectDB();
@@ -28,6 +29,7 @@ export default async function Home() {
       <Categories />
       <MostSales />
       <TasteFinder />
+      <PremiumBundles />
       <Footer />
     </div>
   );
