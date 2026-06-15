@@ -5,9 +5,10 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { LuPhoneCall } from "react-icons/lu";
 import { BsCart2 } from "react-icons/bs";
 import Link from "next/link";
-import Image from "next/image";
+
 import { GiCoffeeBeans } from "react-icons/gi";
 import { getUserFromToken } from "@/utils/auth";
+import { logoutAction } from "@/actions/auth";
 
 export const Navbar = async () => {
   const user = await getUserFromToken();
@@ -50,14 +51,34 @@ export const Navbar = async () => {
           {/* md : visible */}
           <div className="hidden md:flex flex-row-reverse md: gap-4">
             {/* user section */}
-            <div className="flex flex-row-reverse items-center justify-center gap-1 hover:bg-gray-100 rounded-sm cursor-pointer px-4 py-2 transition ease-in">
+            <div
+              className={`relative group flex flex-row-reverse items-center justify-center gap-1 rounded-sm cursor-pointer px-4 py-2 transition ease-in ${!user && "hover:bg-gray-100"}`}
+            >
               {user ? (
                 <Link
                   href="/dashboard"
-                  className="flex flex-row-reverse items-center justify-center gap-2"
+                  className=" group flex flex-row-reverse items-center justify-center gap-2"
                 >
                   <span>{user.name ? user.name : "حساب کاربری"}</span>
                   <MdKeyboardArrowDown size={16} />
+                  <div className="absolute hidden p-1 group-hover:flex flex-col text-right gap-2  top-full right-0 bg-white border border-gray-100 rounded-lg shadow-md">
+                    <span className="text-sm md:text-md  hover:bg-gray-100 w-full py-1 px-3 rounded-md">
+                      داشبورد
+                    </span>
+                    <span className="text-sm md:text-md  hover:bg-gray-100 w-full py-1 px-3 rounded-md">
+                      سفارش ها
+                    </span>
+                    <span className="text-sm md:text-md border-b border-b-gray-100 hover:bg-gray-100 w-full pt-1 pb-2 px-3 rounded-md">
+                      اطلاعات کاربری
+                    </span>
+
+                    <span
+                      className="text-sm md:text-md text-red-700 hover:bg-gray-100 w-full py-1 px-3 rounded-md cursor-pointer text-right"
+                      onClick={logoutAction}
+                    >
+                      خروج
+                    </span>
+                  </div>
                 </Link>
               ) : (
                 <Link
@@ -87,9 +108,7 @@ export const Navbar = async () => {
               <GiCoffeeBeans />
             </Link>
           </li>
-          <li className="text-black opacity-75  hover:bg-[#f1f5f9] hover:opacity-100  hover:rounded-lg px-3 py-2  cursor-pointer">
-            <Link href="/blogs">بلاگ</Link>
-          </li>
+
           <li className="text-black opacity-75 hover:bg-[#f1f5f9] hover:opacity-100  hover:rounded-lg px-3 py-2 cursor-pointer">
             <Link href="/faq">سوالات متداول</Link>
           </li>
