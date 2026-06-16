@@ -4,7 +4,7 @@ import { persist } from "zustand/middleware";
 type CartItem = {
   name: string;
   id: string;
-  price: string;
+  price: number;
   image: string;
   quantity: number;
 };
@@ -20,7 +20,15 @@ type cartStore = {
 const useCartStore = create<cartStore>()(
   persist(
     (set) => ({
-      products: [],
+      products: [
+        {
+          name: "قهوه عربیکا",
+          id: "1525484852",
+          price: 800000,
+          image: "/images/products/product2.jpg",
+          quantity: 2,
+        },
+      ],
 
       addProduct: (newProduct) =>
         set((state) => {
@@ -79,8 +87,8 @@ const useCartStore = create<cartStore>()(
   ),
 );
 
-const getTotalPrice = ()=>{
-    const products = useCartStore
-}
+const getTotalPrice = () => {
+  const products = useCartStore;
+};
 
 export default useCartStore;

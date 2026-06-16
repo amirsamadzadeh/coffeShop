@@ -1,5 +1,5 @@
 import connectDB from "@/configs/db";
-import Category from "@/models/Categorie";
+import { model as Category } from "@/models/Categorie";
 import { model as Products } from "@/models/Products";
 import { notFound } from "next/navigation";
 

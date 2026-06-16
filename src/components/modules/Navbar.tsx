@@ -3,12 +3,11 @@ import { RiSearch2Line } from "react-icons/ri";
 import { FiUser } from "react-icons/fi";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { LuPhoneCall } from "react-icons/lu";
-import { BsCart2 } from "react-icons/bs";
 import Link from "next/link";
-
 import { GiCoffeeBeans } from "react-icons/gi";
 import { getUserFromToken } from "@/utils/auth";
 import { logoutAction } from "@/actions/auth";
+import CartSection from "../templates/navbar/CartSection";
 
 export const Navbar = async () => {
   const user = await getUserFromToken();
@@ -61,7 +60,7 @@ export const Navbar = async () => {
                 >
                   <span>{user.name ? user.name : "حساب کاربری"}</span>
                   <MdKeyboardArrowDown size={16} />
-                  <div className="absolute hidden p-1 group-hover:flex flex-col text-right gap-2  top-full right-0 bg-white border border-gray-100 rounded-lg shadow-md">
+                  <div className="absolute hidden p-1 group-hover:flex flex-col text-right gap-2  top-full right-0 bg-white border border-gray-100 rounded-lg shadow-md z-50">
                     <span className="text-sm md:text-md  hover:bg-gray-100 w-full py-1 px-3 rounded-md">
                       داشبورد
                     </span>
@@ -92,10 +91,7 @@ export const Navbar = async () => {
               )}
             </div>
             {/* cart section */}
-            <div className="flex items-center justify-center p-2 border border-gray-100 hover:bg-gray-100 rounded-sm cursor-pointer transition ease-in ">
-              <BsCart2 size={20} fontWeight={700} />
-              <p className="hidden">0 تومان</p>
-            </div>
+            <CartSection />
           </div>
         </div>
       </div>
