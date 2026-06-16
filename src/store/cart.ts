@@ -9,26 +9,25 @@ type CartItem = {
   quantity: number;
 };
 
-type cartStore = {
+type AddProductProps = {
+  name: string;
+  id: string;
+  price: number;
+  image: string;
+};
+
+type CartStore = {
   products: CartItem[];
-  addProduct: (product: CartItem) => void;
+  addProduct: (product: AddProductProps) => void;
   removeProduct: (product: CartItem) => void;
   increaseQuantity: (product: CartItem) => void;
   decreaseQuantity: (product: CartItem) => void;
 };
 
-const useCartStore = create<cartStore>()(
+const useCartStore = create<CartStore>()(
   persist(
     (set) => ({
-      products: [
-        {
-          name: "قهوه عربیکا",
-          id: "1525484852",
-          price: 800000,
-          image: "/images/products/product2.jpg",
-          quantity: 2,
-        },
-      ],
+      products: [],
 
       addProduct: (newProduct) =>
         set((state) => {
@@ -50,7 +49,7 @@ const useCartStore = create<cartStore>()(
           }
 
           return {
-            products: [...state.products, newProduct],
+            products: [...state.products, { ...newProduct, quantity: 1 }],
           };
         }),
 
@@ -65,7 +64,10 @@ const useCartStore = create<cartStore>()(
         set((state) => ({
           products: state.products.map((product) =>
             product.id === productInfo.id
-              ? { ...product, quantity: product.quantity + 1 }
+              ? {
+                  ...product,
+                  quantity: product.quantity + 1,
+                }
               : product,
           ),
         })),
@@ -75,7 +77,10 @@ const useCartStore = create<cartStore>()(
           products: state.products
             .map((product) =>
               product.id === productInfo.id
-                ? { ...product, quantity: product.quantity - 1 }
+                ? {
+                    ...product,
+                    quantity: product.quantity - 1,
+                  }
                 : product,
             )
             .filter((product) => product.quantity > 0),
@@ -86,9 +91,5 @@ const useCartStore = create<cartStore>()(
     },
   ),
 );
-
-const getTotalPrice = () => {
-  const products = useCartStore;
-};
 
 export default useCartStore;
