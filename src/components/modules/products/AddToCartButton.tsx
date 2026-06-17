@@ -8,6 +8,8 @@ type CartProduct = {
   name: string;
   price: number;
   image: string;
+  weight: number;
+  roast: string;
 };
 
 type Props = {

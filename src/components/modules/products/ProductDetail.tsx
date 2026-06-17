@@ -83,6 +83,8 @@ function ProductDetail({ product }: ProductTypes) {
                       name: product.name,
                       price: product.price,
                       image: product.image,
+                      weight: product.weight,
+                      roast: product.roast,
                     }}
                   />
                 </div>

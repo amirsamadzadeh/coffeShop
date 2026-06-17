@@ -7,6 +7,8 @@ type CartItem = {
   price: number;
   image: string;
   quantity: number;
+  weight: number;
+  roast: string;
 };
 
 type AddProductProps = {
@@ -14,6 +16,8 @@ type AddProductProps = {
   id: string;
   price: number;
   image: string;
+  weight: number;
+  roast: string;
 };
 
 type CartStore = {
