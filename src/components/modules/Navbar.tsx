@@ -8,6 +8,17 @@ import { GiCoffeeBeans } from "react-icons/gi";
 import { getUserFromToken } from "@/utils/auth";
 import { logoutAction } from "@/actions/auth";
 import CartSection from "../templates/navbar/CartSection";
+import MobileMenu from "../templates/navbar/MobileMenu";
+import Image from "next/image";
+
+type userTypes = {
+  _id: string;
+  name: string;
+  email: string;
+  phone: number;
+  password: number;
+  role: string;
+};
 
 export const Navbar = async () => {
   const user = await getUserFromToken();
@@ -18,14 +29,16 @@ export const Navbar = async () => {
       <div className="py-5">
         <div className="flex flex-row-reverse justify-between gap-3 sm:gap-4 items-center  ">
           {/* burger menu */}
-          <CiMenuBurger size={30} className="block md:hidden" />
+          <MobileMenu user={JSON.parse(JSON.stringify(user))} />
 
           <div className="flex flex-row-reverse items-center justify-center gap-4">
             <Link href="/">
-              <img
+              <Image
                 src="/images/logo.png"
                 alt="Logo"
-                className="w-18 h-full sm:w-22 md:w-25 lg:w-28 cursor-pointer"
+                className="w-10 h-5 h-full sm:w-22 md:w-25 lg:w-28 cursor-pointer"
+                width={200}
+                height={200}
               />
             </Link>
             {/* <Link href="/">
