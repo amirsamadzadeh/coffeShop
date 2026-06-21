@@ -1,0 +1,47 @@
+.range-gold {
+  width: 100%;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.range-gold::-webkit-slider-runnable-track {
+  height: 6px;
+  background: #d1b378;
+  border-radius: 999px;
+}
+
+.range-gold::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+
+  background: white;
+
+  border: 2px solid #d1b378;
+
+  border-radius: 999px;
+
+  margin-top: -6px;
+
+  cursor: pointer;
+}
+
+.range-gold::-moz-range-track {
+  height: 6px;
+  background: #d1b378;
+  border-radius: 999px;
+}
+
+.range-gold::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+
+  background: white;
+
+  border: 2px solid #d1b378;
+
+  border-radius: 999px;
+
+  cursor: pointer;
+}
