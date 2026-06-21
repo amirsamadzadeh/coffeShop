@@ -1,5 +1,5 @@
+import { Search } from "../templates/navbar/Search";
 import { CiMenuBurger } from "react-icons/ci";
-import { RiSearch2Line } from "react-icons/ri";
 import { FiUser } from "react-icons/fi";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { LuPhoneCall } from "react-icons/lu";
@@ -50,15 +50,8 @@ export const Navbar = async () => {
           </Link> */}
           </div>
 
-          <div className="flex flex-row-reverse gap-2 items-center bg-gray-100 w-full  md:w-1/2 h-10 rounded-lg px-3">
-            <RiSearch2Line size={20} className="text-gray-500" />
-            <input
-              type="text"
-              placeholder="قهوه، اسپرسو، دم&zwnj;آوری و ..."
-              className="w-full rounded-lg py-3 outline right-5 outline-none"
-              dir="rtl"
-            />
-          </div>
+          {/* Search input  */}
+          <Search />
 
           {/* md : visible */}
           <div className="hidden md:flex flex-row-reverse md: gap-4">
