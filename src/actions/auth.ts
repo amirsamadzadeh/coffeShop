@@ -4,6 +4,10 @@ import connectDB from "@/configs/db";
 import { cookies } from "next/headers";
 import { model as UserModel } from "@/models/Users";
 import { model as OtpModel } from "@/models/Otp";
+import { model as ProductModel } from "@/models/Products";
+import { writeFile } from "fs/promises";
+import path from "path";
+
 import {
   hashPassword,
   verifyPassword,
@@ -309,6 +313,61 @@ export async function verifyOtpAction(
   }
 }
 
+export async function addProductAction(
+  prevState: AuthState,
+  formData: FormData,
+) {
+  try {
+    await connectDB();
+    const name = formData.get("name");
+    const price = formData.get("price");
+    const image = formData.get("image") as File;
+    const weight = formData.get("weight");
+    const packaging = formData.get("packaging");
+    const aroma = formData.get("aroma");
+    const roast = formData.get("roast");
+    const category = formData.get("category");
+
+    // Validation  (for now its a basic Validation)
+
+    if (
+      !name ||
+      !image ||
+      image.size === 0 ||
+      !weight ||
+      !packaging ||
+      !aroma ||
+      !roast ||
+      !category ||
+      !price
+    ) {
+      return {
+        success: false,
+        message: "not valid data",
+      };
+    }
+
+    const buffer = Buffer.from(await image.arrayBuffer());
+    const filename = Date.now() + image.name;
+    const imgPath = path.join(process.cwd(), "public/uploads/" + filename);
+
+    await writeFile(imgPath, buffer);
+
+    await ProductModel.create({
+      name,
+      image: `/uploads/${filename}`,
+      packaging,
+      aroma,
+      roast,
+      category,
+      price: Number(price),
+      weight: Number(weight),
+    });
+    return { success: true, message: "product added succesfully" };
+  } catch (err) {
+    return { success: false, message: "adding product failed" };
+  }
+}
 /* TODO */
 export async function forgotPasswordAction(
   prevState: AuthState,
