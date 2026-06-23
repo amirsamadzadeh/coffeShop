@@ -15,7 +15,7 @@ function Footer() {
   return (
     <div className="w-full bg-white mt-10 shadow-sm ">
       {/* wrapper */}
-      <div className="w-[90%] mx-auto pt-5 ">
+      <div className="px-2 md:px-3 lg:px-5 xl:px-7 2xl:px-12 pt-5">
         {/* contact section  && link section*/}
         <div
           className="flex flex-col lg:grid lg:grid-cols-6 lg:gap-4 lg:py-10 "
@@ -29,7 +29,7 @@ function Footer() {
                 اطلاعات تماس
               </h3>
               <p className="text-[#1e1e20cc] text-sm md:text-base">
-                تهران، میرداماد پاساژ ایران, پلاک 220
+                تهران پاساژ نمونه پلاک 123
               </p>
               <div
                 className="grid grid-cols-6 mt-2 py-5 gap-5 items-start "
@@ -124,40 +124,38 @@ function Footer() {
                   className={`flex flex-col  gap-2.5 lg:gap-4 mt-1 ${pageStatus ? "visible" : "hidden"}`}
                 >
                   <Link
-                    href="/cuprio"
-                    className="text-[#1e1e20b2] text-sm md:text-base hover:text-[#E3BD69] transition-color ease-out"
+                    href="/products"
+                    className="text-[#1e1e20b2] text-sm md:text-base hover:text-[#E3BD69]"
                   >
-                    کاپریو
+                    محصولات
                   </Link>
+
+                  <Link
+                    href="/faq"
+                    className="text-[#1e1e20b2] text-sm md:text-base hover:text-[#E3BD69]"
+                  >
+                    سوالات متداول
+                  </Link>
+
                   <Link
                     href="/about-us"
                     className="text-[#1e1e20b2] text-sm md:text-base hover:text-[#E3BD69]"
                   >
                     درباره ما
                   </Link>
+
                   <Link
-                    href="/posts"
-                    className="text-[#1e1e20b2] text-sm md:text-base hover:text-[#E3BD69]"
-                  >
-                    بلاگ
-                  </Link>
-                  <Link
-                    href="/about-us"
+                    href="/contact-us"
                     className="text-[#1e1e20b2] text-sm md:text-base hover:text-[#E3BD69]"
                   >
                     تماس با ما
                   </Link>
+
                   <Link
-                    href="/cooperate_with_us"
+                    href="/dashboard"
                     className="text-[#1e1e20b2] text-sm md:text-base hover:text-[#E3BD69]"
                   >
-                    همکاری با ما
-                  </Link>
-                  <Link
-                    href="/faq"
-                    className="text-[#1e1e20b2] text-sm md:text-base hover:text-[#E3BD69]"
-                  >
-                    سوالات متداول
+                    داشبورد
                   </Link>
                 </div>
               </div>
@@ -178,28 +176,16 @@ function Footer() {
                   className={`flex flex-col  gap-2.5 lg:gap-4 mt-1 ${linksStatus ? "visible" : "hidden"}`}
                 >
                   <Link
-                    href="/privacy-policy"
+                    href="/dashboard"
                     className="text-[#1e1e20b2] text-sm md:text-base hover:text-[#E3BD69]"
                   >
-                    حریم خصوصی
+                    داشبورد
                   </Link>
                   <Link
-                    href="/rules"
+                    href="/products"
                     className="text-[#1e1e20b2] text-sm md:text-base hover:text-[#E3BD69]"
                   >
-                    قوانین و مقررات
-                  </Link>
-                  <Link
-                    href="/shipment"
-                    className="text-[#1e1e20b2] text-sm md:text-base hover:text-[#E3BD69]"
-                  >
-                    روش های ارسال
-                  </Link>
-                  <Link
-                    href="/experience"
-                    className="text-[#1e1e20b2] text-sm md:text-base hover:text-[#E3BD69]"
-                  >
-                    اشتراک تجربه
+                    محصولات
                   </Link>
                 </div>
               </div>
@@ -238,10 +224,10 @@ function Footer() {
                     قهوه دمی
                   </Link>
                   <Link
-                    href="/categories/horeca"
+                    href="/categories/syrup"
                     className="text-[#1e1e20b2] text-sm md:text-base  hover:text-[#E3BD69]"
                   >
-                    قهوه هورکا
+                    سیروپ ها
                   </Link>
                 </div>
               </div>
@@ -262,25 +248,25 @@ function Footer() {
                   className={`flex flex-col  gap-2.5 lg:gap-4 mt-1 ${accountStatus ? "visible" : "hidden"}`}
                 >
                   <Link
-                    href="/user/profile/orders"
+                    href="/dashboard/orders"
                     className="text-[#1e1e20b2] text-sm md:text-base hover:text-[#E3BD69]"
                   >
                     سفارشات من
                   </Link>
                   <Link
-                    href="/user/profile"
+                    href="/dashboard/profile"
                     className="text-[#1e1e20b2] text-sm md:text-base hover:text-[#E3BD69]"
                   >
                     اطلاعات حساب
                   </Link>
                   <Link
-                    href="/user/addresses"
+                    href="/dashboard/addresses"
                     className="text-[#1e1e20b2] text-sm md:text-base hover:text-[#E3BD69]"
                   >
                     آدرس ها
                   </Link>
                   <Link
-                    href="/user/wishLists"
+                    href="/dashboard/wishLists"
                     className="text-[#1e1e20b2] text-sm md:text-base hover:text-[#E3BD69]"
                   >
                     علاقه مندی ها
@@ -296,10 +282,16 @@ function Footer() {
                 </h3>
                 <div className="flex flex-col gap-2.5">
                   <Link
-                    href="/cuprio"
-                    className="text-[#1e1e20b2] text-base md:text-base hover:text-[#E3BD69] transition-color ease-out"
+                    href="/products"
+                    className="text-[#1e1e20b2] text-base md:text-base hover:text-[#E3BD69]"
                   >
-                    کاپریو
+                    محصولات
+                  </Link>
+                  <Link
+                    href="/faq"
+                    className="text-[#1e1e20b2] text-base md:text-base hover:text-[#E3BD69]"
+                  >
+                    سوالات متداول
                   </Link>
                   <Link
                     href="/about-us"
@@ -307,29 +299,12 @@ function Footer() {
                   >
                     درباره ما
                   </Link>
+
                   <Link
-                    href="/posts"
-                    className="text-[#1e1e20b2] text-base hover:text-[#E3BD69]"
-                  >
-                    بلاگ
-                  </Link>
-                  <Link
-                    href="/about-us"
+                    href="/contact-us"
                     className="text-[#1e1e20b2] text-base hover:text-[#E3BD69]"
                   >
                     تماس با ما
-                  </Link>
-                  <Link
-                    href="/cooperate_with_us"
-                    className="text-[#1e1e20b2] text-base hover:text-[#E3BD69]"
-                  >
-                    همکاری با ما
-                  </Link>
-                  <Link
-                    href="/faq"
-                    className="text-[#1e1e20b2] text-base hover:text-[#E3BD69]"
-                  >
-                    سوالات متداول
                   </Link>
                 </div>
               </div>
@@ -343,28 +318,17 @@ function Footer() {
                 {/* links */}
                 <div className="flex flex-col  gap-2.5  mt-1">
                   <Link
-                    href="/privacy-policy"
+                    href="/dashboard/orders"
                     className="text-[#1e1e20b2] text-base  hover:text-[#E3BD69]"
                   >
-                    حریم خصوصی
+                    سفارش ها
                   </Link>
+
                   <Link
-                    href="/rules"
+                    href="/dashboard/wishlist"
                     className="text-[#1e1e20b2] text-base  hover:text-[#E3BD69]"
                   >
-                    قوانین و مقررات
-                  </Link>
-                  <Link
-                    href="/shipment"
-                    className="text-[#1e1e20b2] text-base  hover:text-[#E3BD69]"
-                  >
-                    روش های ارسال
-                  </Link>
-                  <Link
-                    href="/experience"
-                    className="text-[#1e1e20b2] text-base  hover:text-[#E3BD69]"
-                  >
-                    اشتراک تجربه
+                    علاقه مندی ها
                   </Link>
                 </div>
               </div>
@@ -413,25 +377,25 @@ function Footer() {
                 {/* links */}
                 <div className="flex flex-col  gap-2.5 lg:gap-4 mt-1 ">
                   <Link
-                    href="/user/profile/orders"
+                    href="/dashboard/orders"
                     className="text-[#1e1e20b2] text-base hover:text-[#E3BD69]"
                   >
                     سفارشات من
                   </Link>
                   <Link
-                    href="/user/profile"
+                    href="/dashboard/profile"
                     className="text-[#1e1e20b2] text-base hover:text-[#E3BD69]"
                   >
                     اطلاعات حساب
                   </Link>
                   <Link
-                    href="/user/addresses"
+                    href="/dashboard/addresses"
                     className="text-[#1e1e20b2] text-base hover:text-[#E3BD69]"
                   >
                     آدرس ها
                   </Link>
                   <Link
-                    href="/user/wishLists"
+                    href="/dashboard/wishLists"
                     className="text-[#1e1e20b2] text-base hover:text-[#E3BD69]"
                   >
                     علاقه مندی ها
@@ -444,12 +408,11 @@ function Footer() {
         {/* end of contact section && link section */}
 
         {/* history */}
-        <div className="flex flex-col items-end py-10">
+        <div className="flex flex-col items-end py-10" dir="rtl">
           <p className="text-black text-base text-right">
-            نخستین تولیدکننده قهوه در ایران از سال ۱۳۱۱، با افتخار نزدیک به یک
-            قرن همراه شماست. با تهیه بهترین دانه‌های قهوه از سراسر جهان و ارائه
-            ابزارهای دم‌آوری حرفه‌ای، تجربه‌ای اصیل و لذت‌بخش از قهوه را برای
-            شما فراهم کرده‌ایم.
+            Roastly یک تجربه مدرن از قهوه است که از علاقه به کیفیت و هنر رُست
+            کردن شکل گرفته. ما با دقت انتخاب و رُست می‌کنیم تا یک طعم عمیق و
+            به‌یادماندنی از قهوه ارائه دهیم.
           </p>
         </div>
 
