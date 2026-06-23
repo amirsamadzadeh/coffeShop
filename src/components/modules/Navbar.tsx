@@ -29,7 +29,7 @@ export const Navbar = async () => {
       <div className="py-5">
         <div className="flex flex-row-reverse justify-between gap-3 sm:gap-4 items-center  ">
           {/* burger menu */}
-          <MobileMenu user={JSON.parse(JSON.stringify(user))} />
+          <MobileMenu user={user} />
 
           <div className="flex flex-row-reverse items-center justify-center gap-4">
             <Link href="/">
