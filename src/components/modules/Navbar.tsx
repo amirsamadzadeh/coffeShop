@@ -31,7 +31,7 @@ export const Navbar = async () => {
           {/* burger menu */}
           <MobileMenu user={user} />
 
-          <div className="flex flex-row-reverse items-center justify-center gap-4">
+          <div className="hidden md:flex flex-row-reverse items-center justify-center gap-4">
             <Link href="/">
               <Image
                 src="/images/logo.png"
@@ -41,17 +41,23 @@ export const Navbar = async () => {
                 height={200}
               />
             </Link>
-            {/* <Link href="/">
-            <img
-              src="/images/logo2.svg"
-              alt="Logo"
-              className="h-auto w-24 cursor-pointer hidden xl:flex"
-            />
-          </Link> */}
           </div>
 
           {/* Search input  */}
           <Search />
+
+          {/* logo until 768 */}
+          <div className="md:hidden flex flex-row-reverse h-full items-center justify-center gap-4">
+            <Link href="/">
+              <Image
+                src="/images/logo.png"
+                alt="Logo"
+                className="h-full w-23 cursor-pointer"
+                width={200}
+                height={200}
+              />
+            </Link>
+          </div>
 
           {/* md : visible */}
           <div className="hidden md:flex flex-row-reverse md: gap-4">
@@ -102,7 +108,7 @@ export const Navbar = async () => {
         </div>
       </div>
       {/* Desktop Menu */}
-      <div className="hidden lg:flex justify-end gap-4 mb-2 ">
+      <div className="hidden md:flex justify-end gap-4 mb-2 ">
         <ul className="flex flex-row-reverse items-start gap-4">
           <li className=" text-black hover:bg-[#f1f5f9] transition-colors ease-in delay-75 hover:rounded-lg px-3 py-2 cursor-pointer">
             <Link href="/products" className="flex items-center gap-2">

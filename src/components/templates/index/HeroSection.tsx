@@ -55,7 +55,7 @@ export const HeroSection = () => {
       </div>
 
       {/* After 450px Banners Slider */}
-      <div className="mt-6 mx-auto m-0 2xl:px-12 xl:px-7 lg:px-5 md:px-3 px-2 hidden min-[450px]:block"> 
+      <div className="mt-6 mx-auto m-0 2xl:px-12 xl:px-7 lg:px-5 md:px-3 px-2 hidden min-[450px]:block">
         <Swiper
           slidesPerView={1}
           rewind={true}
@@ -85,7 +85,7 @@ export const HeroSection = () => {
               alt="coffePhoto"
               width={1200}
               height={400}
-              className="w-full h-full object-cover lg:object-top rounded-lg"
+              className="w-full h-full object-cover lg:object-bottom rounded-lg"
             />
           </SwiperSlide>
 
