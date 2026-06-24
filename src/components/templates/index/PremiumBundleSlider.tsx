@@ -29,12 +29,12 @@ const PremiumBundlSlider = ({ children }: React.PropsWithChildren) => {
         }}
         modules={[Pagination]}
         breakpoints={{
-          350: { slidesPerView: 1.5 },
+          350: { slidesPerView: 2 },
           450: { slidesPerView: 2.5 },
-          500: { slidesPerView: 2.5 },
+          500: { slidesPerView: 3 },
           640: { slidesPerView: 3.5 },
           768: { slidesPerView: 4 },
-          1000: { slidesPerView: 4 },
+          1000: { slidesPerView: 6 },
         }}
       >
         {React.Children.map(children, (child, index) => (
