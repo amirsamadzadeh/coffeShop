@@ -96,7 +96,6 @@ export const Navbar = async () => {
                       <form action={logoutAction}>
                         <button
                           className="text-sm md:text-md text-red-700 hover:bg-gray-100 w-full py-1 px-3 rounded-md cursor-pointer text-right"
-                          onClick={logoutAction}
                           type="submit"
                         >
                           خروج
@@ -125,13 +124,12 @@ export const Navbar = async () => {
 
                       {/* logout button */}
                       <form action={logoutAction}>
-                        <span
+                        <button
                           className="text-sm md:text-md text-red-700 hover:bg-gray-100 w-full py-1 px-3 rounded-md cursor-pointer text-right"
-                          onClick={logoutAction}
                           type="submit"
                         >
                           خروج
-                        </span>
+                        </button>
                       </form>
                     </div>
                   )}
