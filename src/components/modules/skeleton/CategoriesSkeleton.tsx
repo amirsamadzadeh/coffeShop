@@ -1,6 +1,6 @@
 const CategoriesSkeleton = () => {
   return (
-    <div className="mt-8 px-2 md:px-3 lg:px-5 xl:px-7 2xl:px-12">
+    <div className="mt-8 px-2 md:px-3 lg:px-5 xl:px-7 2xl:px-12" dir="rtl">
       <div className="flex gap-3 overflow-hidden">
         {Array.from({ length: 6 }).map((_, i) => (
           <div

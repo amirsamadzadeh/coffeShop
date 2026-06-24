@@ -1,16 +1,25 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import CategoryCard from "./CategorieCard";
 import Link from "next/link";
+import CategoriesSkeleton from "@/components/modules/skeleton/CategoriesSkeleton";
 
+type CategoriesType = {
+  title: string;
+  slug: string;
+  image: string;
+};
 export default function Categories() {
-  type CategoriesType = {
-    title: string;
-    slug: string;
-    image: string;
-  };
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return <CategoriesSkeleton />;
 
   const categorieDatas: CategoriesType[] = [
     {

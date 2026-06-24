@@ -1,13 +1,23 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useState,useEffect } from "react";
 import "swiper/css";
 import { Pagination } from "swiper/modules";
 import "swiper/css/pagination";
 import React from "react";
 import Link from "next/link";
+import MostSalesSkeleton from "@/components/modules/skeleton/MostSalesSkeleton";
 
 const MostSalesSlider = ({ children }: React.PropsWithChildren) => {
+  const [mounted, setMounted] = useState(false);
+  
+    useEffect(() => {
+      setMounted(true);
+    }, []);
+  
+    if (!mounted) return <MostSalesSkeleton />;
+  
   return (
     <div>
       <Swiper

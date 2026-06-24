@@ -1,13 +1,20 @@
 "use client";
-
+import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Pagination } from "swiper/modules";
 import "swiper/css/pagination";
 import React from "react";
 import Link from "next/link";
+import PremiumBundlesSkeleton from "@/components/modules/skeleton/PremiumBundlesSkeleton";
 
 const PremiumBundlSlider = ({ children }: React.PropsWithChildren) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  if (!mounted) return <PremiumBundlesSkeleton />;
   return (
     <div>
       <Swiper

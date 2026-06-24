@@ -11,7 +11,7 @@ const CategoryCard = ({ title, image }: CategoryProps) => {
     <div className="flex flex-col items-center overflow-hidden rounded-xl bg-white shadow-sm">
       {/* image */}
       <div className="w-full border-b border-gray-100 p-3">
-        <div className="relative mx-auto aspect-square w-[120]">
+        <div className="relative mx-auto aspect-square w-28">
           <Image src={image} alt={title} fill className="object-contain" />
         </div>
       </div>
