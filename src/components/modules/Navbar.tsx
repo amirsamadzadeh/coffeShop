@@ -22,7 +22,7 @@ type userTypes = {
 
 export const Navbar = async () => {
   const data = await getUserFromToken();
-  const user = JSON.parse(JSON.stringify(data));
+  const user = data ? JSON.parse(JSON.stringify(data)) : null;
 
   return (
     <div className="flex flex-col bg-white mx-auto m-0 2xl:px-12 xl:px-7 lg:px-5 md:px-3 px-2">
@@ -67,31 +67,75 @@ export const Navbar = async () => {
               className={`relative group flex flex-row-reverse items-center justify-center gap-1 rounded-sm cursor-pointer px-4 py-2 transition ease-in ${!user && "hover:bg-gray-100"}`}
             >
               {user ? (
-                <Link
-                  href="/dashboard"
-                  className=" group flex flex-row-reverse items-center justify-center gap-2"
-                >
-                  <span>{user.name ? user.name : "حساب کاربری"}</span>
-                  <MdKeyboardArrowDown size={16} />
-                  <div className="absolute hidden p-1 group-hover:flex flex-col text-right gap-2  top-full right-0 bg-white border border-gray-100 rounded-lg shadow-md z-50">
-                    <span className="text-sm md:text-md  hover:bg-gray-100 w-full py-1 px-3 rounded-md">
-                      داشبورد
-                    </span>
-                    <span className="text-sm md:text-md  hover:bg-gray-100 w-full py-1 px-3 rounded-md">
-                      سفارش ها
-                    </span>
-                    <span className="text-sm md:text-md border-b border-b-gray-100 hover:bg-gray-100 w-full pt-1 pb-2 px-3 rounded-md">
-                      اطلاعات کاربری
-                    </span>
+                <div className=" group flex flex-row-reverse items-center justify-center gap-2">
+                  {user.role === "ADMIN" ? (
+                    <span>داشبورد</span>
+                  ) : (
+                    <span>{user.name ? user.name : "حساب کاربری"}</span>
+                  )}
 
-                    <span
-                      className="text-sm md:text-md text-red-700 hover:bg-gray-100 w-full py-1 px-3 rounded-md cursor-pointer text-right"
-                      onClick={logoutAction}
-                    >
-                      خروج
-                    </span>
-                  </div>
-                </Link>
+                  <MdKeyboardArrowDown size={16} />
+                  {user.role === "ADMIN" ? (
+                    <div className="absolute hidden p-1 group-hover:flex flex-col text-right gap-2  top-full right-0 bg-white border border-gray-100 rounded-lg shadow-md z-50">
+                      <Link href="/control-panel">
+                        <span
+                          className="text-sm md:text-sm flex text-nowrap hover:bg-gray-100 w-full py-1 px-3 rounded-md"
+                          dir="rtl"
+                        >
+                          داشبورد ادمین
+                        </span>
+                      </Link>
+
+                      <Link href="/control-panel/products">
+                        <span className="text-sm md:text-sm flex text-nowrap hover:bg-gray-100 w-full py-1 px-3 rounded-md">
+                          مدیریت محصولات
+                        </span>
+                      </Link>
+
+                      {/* logout button */}
+                      <form action={logoutAction}>
+                        <button
+                          className="text-sm md:text-md text-red-700 hover:bg-gray-100 w-full py-1 px-3 rounded-md cursor-pointer text-right"
+                          onClick={logoutAction}
+                          type="submit"
+                        >
+                          خروج
+                        </button>
+                      </form>
+                    </div>
+                  ) : (
+                    <div className="absolute hidden p-1 group-hover:flex flex-col text-right gap-2  top-full right-0 bg-white border border-gray-100 rounded-lg shadow-md z-50">
+                      <Link href="/dashboard">
+                        <span className="text-sm md:text-md  hover:bg-gray-100 w-full py-1 px-3 rounded-md">
+                          داشبورد
+                        </span>
+                      </Link>
+
+                      <Link href="/dashboard/orders">
+                        <span className="text-sm md:text-md  hover:bg-gray-100 w-full py-1 px-3 rounded-md">
+                          سفارش ها
+                        </span>
+                      </Link>
+
+                      <Link href="/dashboard/profile">
+                        <span className="text-sm md:text-md border-b border-b-gray-100 hover:bg-gray-100 w-full pt-1 pb-2 px-3 rounded-md">
+                          اطلاعات کاربری
+                        </span>
+                      </Link>
+
+                      {/* logout button */}
+                      <form action={logoutAction}>
+                        <span
+                          className="text-sm md:text-md text-red-700 hover:bg-gray-100 w-full py-1 px-3 rounded-md cursor-pointer text-right"
+                          onClick={logoutAction}
+                          type="submit"
+                        >
+                          خروج
+                        </span>
+                      </form>
+                    </div>
+                  )}
+                </div>
               ) : (
                 <Link
                   href="/login-register"
