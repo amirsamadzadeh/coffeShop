@@ -21,7 +21,8 @@ type userTypes = {
 };
 
 export const Navbar = async () => {
-  const user = await getUserFromToken();
+  const data = await getUserFromToken();
+  const user = JSON.parse(JSON.stringify(data));
 
   return (
     <div className="flex flex-col bg-white mx-auto m-0 2xl:px-12 xl:px-7 lg:px-5 md:px-3 px-2">

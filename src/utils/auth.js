@@ -43,7 +43,7 @@ const getUserFromToken = async () => {
       await connectDB();
       const tokenPayload = verifyAccessToken(token);
       if (tokenPayload) {
-        user = await UserModel.findOne({ email: tokenPayload.email });
+        user = await UserModel.findOne({ email: tokenPayload.email }).lean();
         return user;
       }
     } catch (err) {
