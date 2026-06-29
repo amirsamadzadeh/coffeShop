@@ -368,13 +368,223 @@ export async function addProductAction(
     return { success: false, message: "adding product failed" };
   }
 }
-/* TODO */
+
 export async function forgotPasswordAction(
   prevState: AuthState,
   formData: FormData,
 ): Promise<AuthState> {
-  return {
-    success: false,
-    message: "not implemented yet",
-  };
+  try {
+    await connectDB();
+    const phone = formData.get("phone")?.toString() || null;
+    const user = await UserModel.findOne({ phone });
+    const cookieStore = await cookies();
+    if (!phone?.trim()) {
+      return {
+        success: false,
+        message: "phone is required",
+      };
+    }
+    if (!user) {
+      return {
+        success: false,
+        message: "user is not exist",
+      };
+    }
+
+    const code = Math.floor(100000 + Math.random() * 900000);
+    const now = Date.now();
+    const expireAt = now + 2 * 60 * 1000;
+    const response = await fetch(
+      "https://api.iranpayamak.com/ws/v1/sms/pattern",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Api-Key": process.env.IRANPAYAMAK_API_KEY!,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          code: process.env.IRANPAYAMAK_PATTERN_CODE,
+          attributes: {
+            code,
+          },
+          recipient: phone,
+          line_number: "90008361",
+          number_format: "english",
+        }),
+      },
+    );
+
+    if (!response.ok) {
+      return {
+        success: false,
+        message: "otp not sended!",
+      };
+    }
+
+    await OtpModel.findOneAndUpdate(
+      { phone },
+      {
+        code,
+        expireAt,
+      },
+      {
+        upsert: true,
+        new: true,
+      },
+    );
+
+    cookieStore.set("forgot-pass", phone, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 2 * 60,
+      path: "/",
+    });
+
+    return {
+      success: true,
+      message: "otp sended",
+    };
+  } catch (err) {
+    return {
+      success: false,
+      message: "internal server error",
+    };
+  }
+}
+
+export async function verifyOTpForgotPasswordAction(
+  prevState: AuthState,
+  formData: FormData,
+): Promise<AuthState> {
+  try {
+    await connectDB();
+
+    const cookieStore = await cookies();
+
+    const phone = cookieStore.get("forgot-pass")?.value;
+    const codeFromUser = formData.get("phone")?.toString();
+
+    if (!phone) {
+      return {
+        success: false,
+        message: "زمان درخواست به پایان رسیده است",
+      };
+    }
+
+    if (!codeFromUser?.trim()) {
+      return {
+        success: false,
+        message: "کد تایید الزامی است",
+      };
+    }
+
+    const otp = await OtpModel.findOne({ phone });
+
+    if (!otp) {
+      return {
+        success: false,
+        message: "کد تایید یافت نشد",
+      };
+    }
+
+    if (codeFromUser !== otp.code) {
+      return {
+        success: false,
+        message: "کد وارد شده صحیح نیست",
+      };
+    }
+
+    await OtpModel.deleteOne({ _id: otp._id });
+
+    cookieStore.set("reset-password", phone, {
+      httpOnly: true,
+      maxAge: 60 * 5,
+      path: "/",
+      secure: process.env.NODE_ENV === "production",
+    });
+
+    cookieStore.delete("forgot-pass");
+
+    return {
+      success: true,
+      message: "کد تایید شد",
+    };
+  } catch (err) {
+    return {
+      success: false,
+      message: "خطای داخلی سرور",
+    };
+  }
+}
+
+export async function changePasswordAction(
+  prevState: AuthState,
+  formData: FormData,
+): Promise<AuthState> {
+  try {
+    await connectDB();
+    const cookieStore = await cookies();
+    const userPhoneNumber = cookieStore.get("reset-password")?.value;
+    const user = await UserModel.findOne({ phone: userPhoneNumber });
+    const newPassword = formData.get("password")?.toString();
+
+    if (!user) {
+      return {
+        success: false,
+        message: "کاربری با این شماره یافت نشد",
+      };
+    }
+
+    if (!newPassword?.trim() || newPassword.length < 4) {
+      return {
+        success: false,
+        message:
+          "پسوورد خود را به درستی وارد کنید و نباید از 4 کاراکتر کمتر باشد.",
+      };
+    }
+
+    const hashedPassword = await hashPassword(newPassword);
+
+    user.password = hashedPassword;
+
+    await user.save();
+
+    const token = generateAccessToken({
+      id: user._id,
+      email: user.email,
+      role: user.role,
+    });
+
+    const refreshToken = generateRefreshToken({
+      id: user._id,
+      email: user.email,
+      role: user.role,
+    });
+
+    cookieStore.set("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 7,
+      path: "/",
+    });
+
+    cookieStore.set("refresh", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 15,
+      path: "/",
+    });
+
+    cookieStore.delete("reset-password");
+  } catch (err) {
+    return {
+      success: false,
+      message: "internal server error",
+    };
+  }
+  redirect("/dashboard");
 }

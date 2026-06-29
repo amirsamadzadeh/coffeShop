@@ -5,7 +5,12 @@ import { useActionState } from "react";
 type Props = {
   setFormStatus: Dispatch<
     SetStateAction<
-      "LOGIN" | "LOGIN_NUMBER" | "REGISTER" | "FORGOT-PASSWORD" | "OTP_VERIFY"
+      | "LOGIN"
+      | "LOGIN_NUMBER"
+      | "REGISTER"
+      | "FORGOT-PASSWORD"
+      | "CHANGE_PASSWORD"
+      | "OTP_VERIFY"
     >
   >;
 };
