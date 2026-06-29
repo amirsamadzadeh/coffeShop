@@ -93,7 +93,7 @@ export default function Categories() {
       >
         {categorieDatas?.map((data, index) => (
           <SwiperSlide key={index}>
-            <Link href={`/categories/${data.slug}`}>
+            <Link href={`/products?category=${data.slug}`}>
               <CategoryCard {...data} />
             </Link>
           </SwiperSlide>
