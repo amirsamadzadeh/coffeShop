@@ -1,8 +1,18 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Navbar } from "@/components/modules/Navbar";
 import Footer from "@/components/modules/Footer";
 import "@/app/(site)/globals.css";
+
+
+export const metadata: Metadata = {
+  title: "Roastly | صفحه پیدا نشد",
+  icons: {
+    icon: "/favicon.png",
+  },
+};
+
 export default function NotFound() {
   return (
     <div className="">
