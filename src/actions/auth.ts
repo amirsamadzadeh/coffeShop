@@ -5,8 +5,9 @@ import { cookies } from "next/headers";
 import { model as UserModel } from "@/models/Users";
 import { model as OtpModel } from "@/models/Otp";
 import { model as ProductModel } from "@/models/Products";
-import { writeFile } from "fs/promises";
-import path from "path";
+import cloudinary from "@/lib/cloudinary";
+import { UploadApiResponse } from "cloudinary";
+import { Readable } from "stream";
 
 import {
   hashPassword,
@@ -316,19 +317,18 @@ export async function verifyOtpAction(
 export async function addProductAction(
   prevState: AuthState,
   formData: FormData,
-) {
+): Promise<AuthState> {
   try {
     await connectDB();
-    const name = formData.get("name");
-    const price = formData.get("price");
-    const image = formData.get("image") as File;
-    const weight = formData.get("weight");
-    const packaging = formData.get("packaging");
-    const aroma = formData.get("aroma");
-    const roast = formData.get("roast");
-    const category = formData.get("category");
 
-    // Validation  (for now its a basic Validation)
+    const name = formData.get("name")?.toString();
+    const price = Number(formData.get("price"));
+    const image = formData.get("image") as File;
+    const weight = Number(formData.get("weight"));
+    const packaging = formData.get("packaging")?.toString();
+    const aroma = formData.get("aroma")?.toString();
+    const roast = formData.get("roast")?.toString();
+    const category = formData.get("category")?.toString();
 
     if (
       !name ||
@@ -343,29 +343,50 @@ export async function addProductAction(
     ) {
       return {
         success: false,
-        message: "not valid data",
+        message: "اطلاعات وارد شده معتبر نیست.",
       };
     }
 
     const buffer = Buffer.from(await image.arrayBuffer());
-    const filename = Date.now() + image.name;
-    const imgPath = path.join(process.cwd(), "public/uploads/" + filename);
 
-    await writeFile(imgPath, buffer);
+    const uploadResult: UploadApiResponse = await new Promise(
+      (resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          {
+            folder: "roastly/products",
+          },
+          (error, result) => {
+            if (error) return reject(error);
+            resolve(result as UploadApiResponse);
+          },
+        );
+
+        Readable.from(buffer).pipe(uploadStream);
+      },
+    );
 
     await ProductModel.create({
       name,
-      image: `/uploads/${filename}`,
+      image: uploadResult.secure_url,
       packaging,
       aroma,
       roast,
       category,
-      price: Number(price),
-      weight: Number(weight),
+      price,
+      weight,
     });
-    return { success: true, message: "product added succesfully" };
+
+    return {
+      success: true,
+      message: "محصول با موفقیت اضافه شد.",
+    };
   } catch (err) {
-    return { success: false, message: "adding product failed" };
+    console.log(err);
+
+    return {
+      success: false,
+      message: "خطا در افزودن محصول.",
+    };
   }
 }
 

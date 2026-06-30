@@ -22,7 +22,7 @@ export const PremiumBundles = async () => {
   const categorie = await CategoryModel.findOne({ slug: "premium" });
   const products: ProductTypes[] = await ProductModel.find({
     category: categorie._id,
-  }).populate("category");
+  }).populate("category"); 
 
   return (
     <div className="flex flex-col px-2 md:px-3 lg:px-5 xl:px-7 2xl:px-12 mt-11  lg:mt-10">

@@ -1,5 +1,5 @@
 import connectDB from "@/configs/db";
-import Category from "@/models/Categorie";
+import {model as CategoryModel} from "@/models/Categorie";
 
 export async function POST(req: Request) {
   try {
@@ -14,7 +14,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const isCategoryExist = await Category.findOne({
+    const isCategoryExist = await CategoryModel.findOne({
       $or: [{ slug }, { name }],
     });
 
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
       );
     }
 
-    await Category.create({ name, slug });
+    await CategoryModel.create({ name, slug });
 
     return Response.json(
       { message: "Category created Successfully" },
